@@ -1,0 +1,25 @@
+[project]
+name = "apclean"
+version = "0.1.0"
+description = "Amortized Polarization CLEAN — VROOM-SBI minor cycle with tclean major cycle"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "astropy>=5.0",
+    "matplotlib>=3.7",
+    "casatools>=6.7",
+    "casatasks>=6.7",
+    # vroom-sbi must be installed separately:
+    #   pip install -e /path/to/vroom-sbi
+]
+
+[project.scripts]
+apclean = "apclean.cli:main"
+
+[build-system]
+requires      = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
