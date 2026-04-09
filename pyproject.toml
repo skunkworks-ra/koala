@@ -1,7 +1,7 @@
 [project]
-name = "apclean"
-version = "0.1.0"
-description = "Amortized Polarization CLEAN — VROOM-SBI minor cycle with tclean major cycle"
+name = "koala"
+version = "0.2.0"
+description = "Koala — wideband spectral + polarimetric CLEAN with VROOM-SBI minor cycle"
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.24",
@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-apclean = "apclean.cli:main"
+koala = "koala.cli:main"
 
 [build-system]
 requires      = ["setuptools>=64"]

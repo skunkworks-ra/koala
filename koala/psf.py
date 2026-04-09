@@ -1,6 +1,6 @@
 """
-apclean.psf
-===========
+koala.psf
+=========
 PSF utilities: boundary-safe subtraction, sidelobe level, clean beam fitting.
 """
 
@@ -46,15 +46,6 @@ def compute_sidelobe_level(
 ) -> float:
     """
     Estimate PSF sidelobe level = max|PSF| / PSF_peak outside the main lobe.
-
-    Parameters
-    ----------
-    psf_cube            : (nfreq, ndec, nra)
-    sidelobe_radius_pix : pixels around centre excluded (should cover main lobe)
-
-    Returns
-    -------
-    sidelobe_level : float in (0, 1)
     """
     psf_mean = np.nanmean(psf_cube, axis=0)
     peak     = float(psf_mean.max())
@@ -127,15 +118,6 @@ def restore_cube(
 ) -> np.ndarray:
     """
     Restored image = model convolved with clean beam + residual.
-
-    Parameters
-    ----------
-    model, residual : (nfreq, ndec, nra)
-    psf_cube        : (nfreq, ndec, nra)  — used for beam fitting
-
-    Returns
-    -------
-    restored : (nfreq, ndec, nra)
     """
     bmaj, bmin, bpa = fit_clean_beam(psf_cube)
     ksize    = int(np.ceil(bmaj * 4)) | 1
@@ -146,7 +128,6 @@ def restore_cube(
         x_size   = ksize,
         y_size   = ksize,
     )
-    # Normalise to peak=1 (CLEAN Jy/beam convention, not Jy)
     beam_arr = beam.array / beam.array.max()
 
     nfreq     = model.shape[0]

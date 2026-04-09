@@ -1,0 +1,95 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# MyPy / type checkers
+.mypy_cache/
+.dmypy.json
+.pytype/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# CASA working images (tclean scratch)
+*.model/
+*.pb/
+*.psf/
+*.residual/
+*.sumwt/
+*.image/
+*.mask/
+*.pbcor/
+*.weight/
+casa-*.log
+casalog*.log
+*.last
+ipython-*.log
+
+# APCLEAN run outputs
+*_restored_I.fits
+*_restored_Q.fits
+*_restored_U.fits
+*_model_I.fits
+*_model_Q.fits
+*_model_U.fits
+*_residual_I.fits
+*_residual_Q.fits
+*_residual_U.fits
+*_mfs_I.fits
+*_mfs_Q.fits
+*_mfs_U.fits
+*_mfs_P.fits
+*_mfs_frac_pol.fits
+*_rm.fits
+*_p.fits
+*_chi0.fits
+*_ncomp.fits
+*_sigma_phi.fits
+*_delta_phi.fits
+*_diagnostic.pdf
+*.log
+
+# Measurement sets (large binary data)
+*.ms/
+*.ms.flagversions/
+
+# Sky models / simulation scratch
+*.im/
+*.cl/
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# Linux
+Thumbs.db

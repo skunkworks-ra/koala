@@ -1,16 +1,14 @@
 """
-apclean.cli
-===========
-Command-line interface for APCLEAN.
+koala.cli
+=========
+Command-line interface for Koala.
 
 Usage
 -----
-    apclean --ms obs.ms --imagename work/apclean \\
-            --imsize 256 --cell 15arcsec \\
-            --vroom-config config.yaml --vroom-model-dir models/ \\
-            --debug
-
-All major parameters are exposed as flags with the same names used in APClean.
+    koala --ms obs.ms --imagename work/koala \\
+          --imsize 256 --cell 15arcsec \\
+          --vroom-model-dir models/ \\
+          --mode spectra+pol --debug
 """
 
 from __future__ import annotations
@@ -22,8 +20,8 @@ import sys
 
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="apclean",
-        description="APCLEAN — Amortized Polarization CLEAN (VROOM-SBI + tclean)",
+        prog="koala",
+        description="Koala — wideband spectral + polarimetric CLEAN (VROOM-SBI + tclean)",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
@@ -32,7 +30,7 @@ def _build_parser() -> argparse.ArgumentParser:
     req.add_argument("--ms",        required=True,
                      help="Measurement set path.")
     req.add_argument("--imagename", required=True,
-                     help="tclean working image prefix (e.g. work/apclean).")
+                     help="tclean working image prefix (e.g. work/koala).")
     req.add_argument("--imsize",    required=True, type=int,
                      help="Square image size in pixels.")
     req.add_argument("--cell",      required=True,
@@ -47,6 +45,12 @@ def _build_parser() -> argparse.ArgumentParser:
     vroom.add_argument("--device",          default="cuda",
                        choices=["cuda", "cpu"],
                        help="PyTorch device for VROOM inference.")
+
+    # ── mode ──────────────────────────────────────────────────────────────
+    p.add_argument("--mode", default="spectra+pol",
+                   choices=["spectra", "spectra+pol"],
+                   help="'spectra' = Stokes I only with spectral shape SED. "
+                        "'spectra+pol' = full IQUV with spectral I + Faraday Q/U.")
 
     # ── imaging ───────────────────────────────────────────────────────────
     img = p.add_argument_group("imaging")
@@ -77,7 +81,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # ── output ────────────────────────────────────────────────────────────
     out = p.add_argument_group("output")
-    out.add_argument("--output-prefix", default="apclean_out",
+    out.add_argument("--output-prefix", default="koala_out",
                      help="Prefix for all output FITS files and the run log.")
     out.add_argument("--debug", action="store_true",
                      help="Generate multi-page diagnostic PDF after run.")
@@ -93,7 +97,6 @@ def main() -> None:
     parser = _build_parser()
     args   = parser.parse_args()
 
-    # ── logging ───────────────────────────────────────────────────────────
     logging.basicConfig(
         level   = getattr(logging, args.log_level),
         format  = "%(asctime)s %(levelname)-8s %(name)s: %(message)s",
@@ -104,9 +107,9 @@ def main() -> None:
         ],
     )
 
-    from apclean import APClean
+    from koala import Koala
 
-    cleaner = APClean(
+    cleaner = Koala(
         ms              = args.ms,
         imagename       = args.imagename,
         imsize          = args.imsize,
@@ -114,6 +117,7 @@ def main() -> None:
         reffreq         = args.reffreq,
         robust          = args.robust,
         vroom_model_dir = args.vroom_model_dir,
+        mode            = args.mode,
         loop_gain       = args.loop_gain,
         threshold_sigma = args.threshold_sigma,
         p_snr_threshold = args.p_snr_threshold,

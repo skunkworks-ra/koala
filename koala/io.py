@@ -1,6 +1,6 @@
 """
-apclean.io
-==========
+koala.io
+========
 CASA image I/O via casatools and FITS output via astropy.
 """
 
@@ -94,12 +94,7 @@ def write_model_to_casa(
     Write I/Q/U model arrays into a CASA image at *path*.
 
     If the image does not exist it is created by cloning *template_path*
-    (the residual image) and zeroing the data — this happens on the first
-    call after tclean(niter=0) which does not produce a .model image.
-
-    Parameters
-    ----------
-    i_model, q_model, u_model : (nfreq, ndec, nra) float64
+    (the residual image) and zeroing the data.
     """
     from casatools import image as iatool
 
