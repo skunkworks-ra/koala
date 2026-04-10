@@ -1,4 +1,4 @@
-# APCLEAN — Amortized Polarization CLEAN
+# Koala
 
 A wideband radio interferometric deconvolver that combines:
 
